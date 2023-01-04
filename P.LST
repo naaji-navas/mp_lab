@@ -1,0 +1,115 @@
+Microsoft (R) Macro Assembler Version 5.00                  11/21/22 00:14:10
+                                                             Page     1-1
+
+
+				
+Sreehari.ASM(40): warning A4085: End of file, no END directive
+Open segments:
+_TEXT  . . . . . . . . . . . . .  	
+Open procedures:
+MAIN . . . . . . . . . . . . . .  	
+Microsoft (R) Macro Assembler Version 5.00                  11/21/22 00:14:10
+                                                             Page     1-1
+
+
+       1				.MODEL SMALL 
+       2 0100				.STACK 100h 
+       3 0000				.DATA 
+       4 0000  64			MAXLEN Db 100 
+       5 0001  ??			            ACTCHAR Db ? 
+       6 0002  0065[			            STR DB 101 DUP('$') 
+       7	   24			
+       8			 ]	
+       9				
+      10 0067  4E 55 4D 42 45 52 20	            STR1 DB "NUMBER OF WORDS IS
+					 10,13,"'$'" 
+      11       4F 46 20 57 4F 52 44	
+      12       53 20 49 53 20 31 30	
+      13       2C 31 33 2C		
+Sreehari.ASM(7): warning A4001: Extra characters on line
+      14 0000				.CODE 
+      15 0000				MAIN PROC FAR 
+      16 0000  B8 ---- R		            MOV AX, @DATA 
+      17 0003  8E D8			            MOV DS, AX 
+      18 0005  B9 0000			MOV CX, 00 
+      19 0008  BB 0000			            MOV BX, 00 
+      20 000B  B8 0000			            MOV AX, 00 
+      21 000E  8D 16 0000 R		            LEA DX, MAXLEN 
+      22 0012  B4 0A			            MOV AH, 0AH 
+      23 0014  CD 21			            INT 21H 
+      24				 
+      25				      
+      26 0016  B5 00			MOV CH, 00H 
+      27 0018  8A 0E 0001 R		            MOV Cl, ACTCHAR 
+      28 001C  BA 0100			            MOV DX, 0100H 
+      29 001F  80 3E 0002 R 20		            CMP STR [0], ' ' 
+      30 0024  75 03			            JNZ L1 
+      31 0026  80 EE 01			            SUB DH, 01 
+      32				 
+      33 0029  80 BF 0002 R 20		L1:       CMP STR [BX], ' ' 
+      34 002E  75 00			            JNZ L3 
+Sreehari.ASM(28): error A2009: Symbol not defined: L3
+      35 0030  43			L2:       INC BX 
+      36 0031  49			            DEC CX 
+      37 0032  80 BF 0002 R 20		            CMP STR [BX], ' ' 
+      38 0037  74 F7			            JZ l2 
+      39 0039  FE C6			            INC DH 
+      40 003B  80 FE 0A			            CMP DH, 0AH 
+      41 003E  72 00			            JB L3 
+Sreehari.ASM(35): error A2009: Symbol not defined: L3
+      42 0040  B6 00			            MOV DH, 00 
+      43 0042  FE C2			            INC DL 
+      44					 
+      45					 
+      46				 
+Sreehari.ASM(40): warning A4085: End of file, no END directive
+Open segments:
+_TEXT  . . . . . . . . . . . . .  	
+Open procedures:Microsoft (R) Macro Assembler Version 5.00                  11/21/22 00:14:10
+                                                             Page     1-2
+
+
+
+MAIN . . . . . . . . . . . . . .  	
+Microsoft (R) Macro Assembler Version 5.00                  11/21/22 00:14:10
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0080	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0100	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	0000	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+ACTCHAR  . . . . . . . . . . . .  	L BYTE	0001	_DATA
+
+L1 . . . . . . . . . . . . . . .  	L NEAR	0029	_TEXT
+L2 . . . . . . . . . . . . . . .  	L NEAR	0030	_TEXT
+
+MAIN . . . . . . . . . . . . . .  	F PROC	0000	_TEXT	Length = 0000
+MAXLEN . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+
+STR  . . . . . . . . . . . . . .  	L BYTE	0002	_DATA	Length = 0065
+STR1 . . . . . . . . . . . . . .  	L BYTE	0067	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  Sreehari		
+
+
+     39 Source  Lines
+     40 Total   Lines
+     21 Symbols
+
+  50540 + 466004 Bytes symbol space free
+
+      2 Warning Errors
+      5 Severe  Errors

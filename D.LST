@@ -1,0 +1,136 @@
+Microsoft (R) Macro Assembler Version 5.00                  11/21/22 01:16:43
+                                                             Page     1-1
+
+
+				.MODEL SMALL 
+ 0064				.STACK 100 
+ 0000				.DATA 
+ 0000  64			MAXLEN Db 100 
+ 0001  ??			            ACTCHAR Db ? 
+ 0002  0A 0D 45 4E 54 45 52	            MSG DB 10,13,"ENTER THE WORD: $" 
+       20 54 48 45 20 57 4F	
+       52 44 3A 20 24		
+ 0015  0064[			            STR DB 100 DUP('$') 
+	   24			
+			 ]	
+				
+ 0079  0A 0D 4E 55 4D 42 45	            STR1 DB 10,13,"NUMBER OF LETTERS : 
+				$" 
+       52 20 4F 46 20 4C 45	
+       54 54 45 52 53 20 3A	
+       20 24			
+ 0000				.CODE 
+ 0000				MAIN PROC FAR 
+ 0000  B8 ---- R		            MOV AX, @DATA 
+ 0003  8E D8			            MOV DS, AX 
+ 0005  B9 0000			MOV CX, 00 
+ 0008  BB 0000			            MOV BX, 00 
+ 000B  B8 0000			            MOV AX, 00 
+ 000E  8D 16 0000 R		            LEA DX, MAXLEN 
+ 0012  B4 0A			            MOV AH, 0AH 
+ 0014  CD 21			            INT 21H 
+				 
+				      
+ 0016  B5 00			MOV CH, 00H 
+ 0018  8A 0E 0001 R		            MOV Cl, ACTCHAR 
+ 001C  BA 0100			            MOV DX, 0100H 
+ 001F  80 3E 0015 R 20		            CMP STR [0], ' ' 
+ 0024  75 03			            JNZ L1 
+ 0026  80 EE 01			            SUB DH, 01 
+				 
+ 0029  80 BF 0015 R 20		L1:       CMP STR [BX], ' ' 
+ 002E  75 14			            JNZ L3 
+				 
+ 0030  43			L2:       INC BX 
+ 0031  49			            DEC CX 
+ 0032  80 BF 0015 R 20		            CMP STR [BX], ' ' 
+ 0037  74 F7			            JZ l2 
+ 0039  FE C6			            INC DH 
+ 003B  80 FE 0A			            CMP DH, 0AH 
+ 003E  72 04			            JB L3 
+ 0040  B6 00			            MOV DH, 00 
+ 0042  FE C2			            INC DL 
+				 
+ 0044  43			L3:       INC BX 
+ 0045  E2 E2			            LOOP L1 
+ 0047  80 BF 0014 R 20		            CMP STR [BX-1], ' ' 
+ 004C  75 0B			            JNZ L4 
+ 004E  80 EE 01			            SUB DH, 01 
+Microsoft (R) Macro Assembler Version 5.00                  11/21/22 01:16:43
+                                                             Page     1-2
+
+
+ 0051  73 06			            JNC L4 
+ 0053  80 EA 01			            SUB DL, 01 
+ 0056  80 C6 0A			            ADD DH, 0AH 
+				 
+ 0059  8B DA			L4:       MOV BX, DX 
+ 005B  B4 02			            MOV AH, 02H 
+ 005D  B2 0A			            MOV DL, 0AH 
+ 005F  CD 21			            INT 21H 
+ 0061  B2 0D			            MOV DL, 0DH 
+ 0063  CD 21			            INT 21H 
+ 0065  8D 16 0002 R		            LEA DX,MSG 
+ 0069  B4 09			            MOV AH,09H 
+ 006B  CD 21			            INT 21H 
+ 006D  8D 16 0079 R		            LEA DX, STR1 
+ 0071  B4 09			            MOV AH, 09H 
+ 0073  CD 21			            INT 21H 
+				 
+ 0075  8B D3			            MOV DX, BX 
+ 0077  80 C2 30			            ADD DL, 30H 
+ 007A  B4 02			            MOV AH, 02H 
+ 007C  CD 21			            INT 21H 
+ 007E  80 C6 30			            ADD DH, 30H 
+ 0081  8A D6			            MOV DL, DH 
+ 0083  B4 02			            MOV AH, 02H 
+ 0085  CD 21			            INT 21H 
+ 0087  B8 400C			            MOV AX, 400CH 
+ 008A  CD 21			            INT 21H 
+ 008C				  MAIN ENDP 
+ 008C				  END MAIN 
+Microsoft (R) Macro Assembler Version 5.00                  11/21/22 01:16:43
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0090	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0064	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	008C	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+ACTCHAR  . . . . . . . . . . . .  	L BYTE	0001	_DATA
+
+L1 . . . . . . . . . . . . . . .  	L NEAR	0029	_TEXT
+L2 . . . . . . . . . . . . . . .  	L NEAR	0030	_TEXT
+L3 . . . . . . . . . . . . . . .  	L NEAR	0044	_TEXT
+L4 . . . . . . . . . . . . . . .  	L NEAR	0059	_TEXT
+
+MAIN . . . . . . . . . . . . . .  	F PROC	0000	_TEXT	Length = 008C
+MAXLEN . . . . . . . . . . . . .  	L BYTE	0000	_DATA
+MSG  . . . . . . . . . . . . . .  	L BYTE	0002	_DATA
+
+STR  . . . . . . . . . . . . . .  	L BYTE	0015	_DATA	Length = 0064
+STR1 . . . . . . . . . . . . . .  	L BYTE	0079	_DATA
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  SREE		
+
+
+     74 Source  Lines
+     74 Total   Lines
+     24 Symbols
+
+  50980 + 465564 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors
